@@ -35,8 +35,7 @@ export function parallax(el, x, y) {
 // Go to the top page
 function scrollToTop () {
     window.scrollTo( {
-        top: 0,
-        behavior: "smooth",
+        top: 0
     });
 }
 
