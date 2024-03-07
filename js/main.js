@@ -1,4 +1,5 @@
 import { connect, startEvents } from './webSocketsCli.js';
+import { startHistory } from './mixins/history.js';
 import { Application } from "./vendors/stimulus.js";
 import pageController from "./controllers/page_controller.js";
 import aboutUsController from "./controllers/about_us_controller.js";
@@ -14,6 +15,7 @@ import contactController from "./controllers/contact_controller.js";
 // WebSocket connection
 connect();
 startEvents();
+startHistory();
 
 // Stimulus
 window.Stimulus = Application.start();
