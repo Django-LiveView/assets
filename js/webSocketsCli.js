@@ -6,13 +6,15 @@ import {
     moveScrollToAnchor,
     moveScrollToTop
 } from "./mixins/miscellaneous.js";
+import { saveHistory } from "./mixins/history.js";
+
 
 /*
    FUNCTIONS
  */
 
 function showNoConnectionModal() {
-    document.querySelector("#modal-no-connection")?.classList.add("show");
+  document.querySelector("#modal-no-connection")?.classList.add("show");
     document.querySelector("#modal-button-refresh-page")?.addEventListener('click', () => {
         location.reload();
     });
@@ -48,12 +50,12 @@ export function connect(url=`${'https:' == document.location.protocol ? 'wss' : 
  */
 export function sendData(message, webSocket=window.myWebSocket) {
     if (webSocket.readyState === WebSocket.OPEN) {
-	// Add lang
-	const messageWithoutLang = message;
-	messageWithoutLang.data.lang = document.querySelector("html").getAttribute("lang");
-	const messageFull = messageWithoutLang;
-	// Send
-	webSocket.send(JSON.stringify(messageFull));
+	    // Add lang
+	    const messageWithoutLang = message;
+	    messageWithoutLang.data.lang = document.querySelector("html").getAttribute("lang");
+	    const messageFull = messageWithoutLang;
+	    // Send
+	    webSocket.send(JSON.stringify(messageFull));
     }
 }
 
@@ -71,12 +73,13 @@ export function startEvents(webSocket=window.myWebSocket) {
   // Event when a new message is received by WebSockets
   webSocket.addEventListener("message", (event) => {
     // Parse the data received
-      const data = JSON.parse(event.data);
+    const data = JSON.parse(event.data);
 
     // Renders the HTML received from the Consumer
-      renderHTML(data);
-      moveScrollToAnchor(data);
-      moveScrollToTop(data);
+    renderHTML(data);
+    moveScrollToAnchor(data);
+    moveScrollToTop(data);
+    saveHistory(data);
   });
 
   /**
