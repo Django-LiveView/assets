@@ -1,33 +1,44 @@
-// Imports
+/*
+   Imports
+ */
 import {
-    addBodyScrollLock,
-    removeBodyScrollLock,
-    renderHTML,
-    moveScrollToAnchor,
-    moveScrollToTop
+  renderHTML,
+  moveScrollToAnchor,
+  moveScrollToTop
 } from "./mixins/miscellaneous.js";
 import { saveHistory } from "./mixins/history.js";
 
+/*
+   Variables
+ */
+const connectionModal = document.querySelector("#no-connection");
+const nameStyleHideNoConnection = "no-connection--hide";
+const nameStyleShowNoConnection = "no-connection--show";
 
 /*
    FUNCTIONS
  */
 
+/**
+ * Show no connection modal when the connection is lost
+ * @return {void}
+ */
 function showNoConnectionModal() {
-  document.querySelector("#modal-no-connection")?.classList.add("show");
-    document.querySelector("#modal-button-refresh-page")?.addEventListener('click', () => {
-        location.reload();
-    });
-    addBodyScrollLock();
-    setTimeout(() => {
-        document.querySelector("#modal-no-connection-content")?.classList.remove("hide");
-    }, 2000)
+  if (connectionModal) {
+    connectionModal.classList.remove(nameStyleHideNoConnection);
+    connectionModal.classList.add(nameStyleShowNoConnection);
+  }
 }
 
+/**
+ * Hide no connection modal when the connection is restored
+ * @return {void}
+ */
 function hideNoConnectionModal() {
-    document.querySelector("#modal-no-connection")?.classList.remove("show");
-    document.querySelector("#modal-no-connection-content")?.classList.add("hide");
-    removeBodyScrollLock();
+  if (connectionModal) {
+    connectionModal.classList.remove(nameStyleShowNoConnection);
+    connectionModal.classList.add(nameStyleHideNoConnection);
+  }
 }
 
 /**
@@ -37,8 +48,8 @@ function hideNoConnectionModal() {
  */
 export function connect(url=`${'https:' == document.location.protocol ? 'wss' : 'ws'}://${ document.body.dataset.host }/ws/liveview/`) {
   console.log("Connecting to WebSockets server...");
-    window.myWebSocket = new WebSocket(url);
-    return window.myWebSocket;
+  window.myWebSocket = new WebSocket(url);
+  return window.myWebSocket;
 }
 
 
