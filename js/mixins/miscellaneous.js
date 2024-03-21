@@ -3,14 +3,6 @@ export function getLang() {
   return document.querySelector('html').getAttribute("lang");
 }
 
-// Prevent body scroll
-export function addBodyScrollLock() {
-  document.body.classList.add("scroll-lock");
-}
-export function removeBodyScrollLock() {
-    document.body.classList.remove("scroll-lock");
-}
-
 export async function encodeFileAsBase64URL(file) {
     if (file) {
 	return new Promise((resolve) => {
