@@ -22,6 +22,28 @@ export default class extends Controller {
     return data;
   }
 
+  allValues() {
+    let data = {};
+    const inputsNames = [
+      "input",
+      "select",
+      "textarea"
+    ];
+    // Check if is a input
+    if (inputsNames.includes(event.currentTarget.tagName.toLowerCase())) {
+      data[event.currentTarget.name] = event.currentTarget.value;
+      return data;
+    }
+    // Check if is a form
+    if (event.currentTarget.tagName.toLowerCase() === "form") {
+      const inputs = event.currentTarget.querySelectorAll(inputsNames.join(","));
+      inputs.forEach((input) => {
+        data[input.name] = input.value;
+      });
+      return data;
+    }
+  }
+
   changePage(event) {
     event.preventDefault();
     // Variables
@@ -49,7 +71,11 @@ export default class extends Controller {
       return;
     }
     // Send the data to the server
-    const myData = {action: `${liveviewAction}->${liveviewFunction}`, data: this.allData()};
+    const myData = {
+      action: `${liveviewAction}->${liveviewFunction}`,
+      data: this.allData(),
+      form: this.allValues()
+    };
     console.debug(myData);
     sendData(myData);
   };
