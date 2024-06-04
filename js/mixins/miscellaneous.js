@@ -36,17 +36,22 @@ export const renderHTML = (data) => {
 
   const targetHTML = document.querySelector(data.selector);
   if (targetHTML) {
-    if (data.append) {
-      targetHTML.innerHTML += data.html;
+    // Remove the content of the target
+    if (data.remove) {
+        targetHTML.remove();
     } else {
-        targetHTML.innerHTML = data.html;
+        // Add the content to the target
+        if (data.append) {
+          targetHTML.innerHTML += data.html;
+        } else {
+            // Replace the content of the target
+            targetHTML.innerHTML = data.html;
+        }
+        // If it is a new page or is backward, the scroll returns to the beginning
+        if ( data.html && !data.scroll && data.url) {
+          setTimeout(() => { scrollToTop() }, 50);
+        }
     }
-
-    // If it is a new page or is backward, the scroll returns to the beginning
-    if ( data.html && !data.scroll && data.url) {
-      setTimeout(() => { scrollToTop() }, 50);
-    }
-
   } else {
     console.error(`Target ${data.selector} not found`);
     return;
