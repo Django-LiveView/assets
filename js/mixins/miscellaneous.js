@@ -40,9 +40,9 @@ export const renderHTML = (data) => {
     if (data.remove) {
         targetHTML.remove();
     } else {
-        // Add the content to the target
         if (data.append) {
-          targetHTML.innerHTML += data.html;
+            // Add the content to the target
+            targetHTML.insertAdjacentHTML("beforeend", data.html);
         } else {
             // Replace the content of the target
             targetHTML.innerHTML = data.html;
