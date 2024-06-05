@@ -41,8 +41,16 @@ export const renderHTML = (data) => {
         targetHTML.remove();
     } else {
         if (data.append) {
-            // Add the content to the target
-            targetHTML.insertAdjacentHTML("beforeend", data.html);
+            const reScript = /<script\b[^>]*>([\s\S]*?)<\/script>/gm;
+            // Add HTML to the target
+            const htmlText = data.html.replace(reScript, '');
+            targetHTML.insertAdjacentHTML("beforeend", htmlText);
+            // Add JS to the target
+            for (const match of data.html.matchAll(reScript)) {
+                const script = document.createElement('script');
+                script.textContent = match[1];
+                targetHTML.insertAdjacentElement("afterend", script);
+            }
         } else {
             // Replace the content of the target
             targetHTML.innerHTML = data.html;
