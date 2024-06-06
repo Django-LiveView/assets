@@ -46,7 +46,7 @@ function hideNoConnectionModal() {
  * @param {string} url - WebSockets server url
  * @return {WebSocket}
  */
-export function connect(url=`${'https:' == document.location.protocol ? 'wss' : 'ws'}://${ document.body.dataset.host }/ws/liveview/`) {
+export function connect(url=`${'https:' == document.location.protocol ? 'wss' : 'ws'}://${ location.host }/ws/liveview/`) {
   console.log("Connecting to WebSockets server...");
   window.myWebSocket = new WebSocket(url);
   return window.myWebSocket;
