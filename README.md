@@ -16,10 +16,20 @@ Django LiveView Frontend is a set of JavaScript functions that are responsible f
 
 Events are manage by Stimulus, a JavaScript framework that allows you to create controllers that are responsible for managing a specific part of the DOM. The rest of the code is written in plain JavaScript.
 
-## How to use it?
+## Install
+
+### Option 1: CDN
+
+Add the following line to your HTML.
+
+```html
+<script defer type="module" src="https://cdn.jsdelivr.net/gh/Django-LiveView/frontend/js/main.js"></script>
+```
+
+### Option 2: Manual
 
 You only need to download the `js` folder and link `main.js` in your HTML file.
 
 ```html
-<script defer src="js/main.js"></script>
+<script defer type="module" src="js/main.js"></script>
 ```
